@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "confinject"
+version = "0.1.0"
+description = "Config inject tool"
+authors = ["dinhanhx <dinhanhx@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+include = ["configs/*"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.1.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
