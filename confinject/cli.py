@@ -3,8 +3,6 @@ import os
 import shutil
 
 TEMPLATE_DIR = Path(os.path.dirname(__file__)).joinpath('template')
-print(TEMPLATE_DIR)
-
 CWD = Path(os.getcwd())
 
 
