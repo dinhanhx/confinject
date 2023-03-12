@@ -15,14 +15,17 @@ CWD = Path.cwd()
 
 def create_template(cwd: Path, template_dir: Path, template_name: str) -> bool:
     target = cwd.joinpath(template_name)
+    source = template_dir.joinpath(template_name)
+
     if not target.exists():
         print(f'Create {template_name}')
-        if template_dir.joinpath(template_name).is_dir():
+        if source.is_dir():
             target.mkdir()
             return True
-        elif template_dir.joinpath(template_name).is_file():
-            shutil.copy(template_dir.joinpath(template_name), target)
+        elif source.is_file():
+            shutil.copy(source, target)
             return True
+
     print(f'{template_name} already exists')
     return False
 
