@@ -3,42 +3,34 @@ import os
 import shutil
 
 TEMPLATE_DIR = Path(os.path.dirname(__file__)).joinpath('template')
-CWD = Path(os.getcwd())
+TEMPLATE_NAME_LIST = [
+    '.flake8',
+    'ruff.toml',
+    '.vscode',
+    '.vscode/settings.json',
+    '.vscode/extensions.json',
+]
+CWD = Path.cwd()
+
+
+def create_template(cwd: Path, template_dir: Path, template_name: str) -> bool:
+    target = cwd.joinpath(template_name)
+    if not target.exists():
+        print(f'Create {template_name}')
+        if target.is_dir():
+            target.mkdir()
+            return True
+        elif target.is_file():
+            shutil.copy(target, template_dir.joinpath(template_name))
+            return True
+    print(f'{template_name} already exists')
+    return False
 
 
 def main():
-    if not CWD.joinpath('.flake8').is_file():
-        print('Create .flake8')
-        shutil.copy(TEMPLATE_DIR.joinpath('.flake8'), CWD.joinpath('.flake8'))
-    else:
-        print('.flake8 already exists')
+    for template_name in TEMPLATE_NAME_LIST:
+        create_template(CWD, TEMPLATE_DIR, template_name)
 
-    if not CWD.joinpath('ruff.toml').is_file():
-        print('Create ruff.toml')
-        shutil.copy(TEMPLATE_DIR.joinpath('ruff.toml'), CWD.joinpath('ruff.toml'))
-    else:
-        print('ruff.toml already exists')
 
-    if not CWD.joinpath('.vscode').is_dir():
-        print('Create .vscode')
-        CWD.joinpath('.vscode').mkdir()
-    else:
-        print('.vscode already exists')
-
-    if not CWD.joinpath('.vscode/settings.json').is_file():
-        print('Create .vscode/settings.json')
-        shutil.copy(
-            TEMPLATE_DIR.joinpath('.vscode/settings.json'),
-            CWD.joinpath('.vscode/settings.json'),
-        )
-    else:
-        print('.vscode/settings.json exists already')
-
-    if not CWD.joinpath('.vscode/extensions.json').is_file():
-        print('Create .vscode/extensions.json')
-        shutil.copy(
-            TEMPLATE_DIR.joinpath('.vscode/extensions.json'),
-            CWD.joinpath('.vscode/extensions.json'),
-        )
-    else:
-        print('.vscode/extensions.json exists already')
+if __name__ == '__main__':
+    main()
